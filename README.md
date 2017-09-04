@@ -7,7 +7,7 @@ Apache 2.4.18
 Gravitystorm-carto 4.2.0
 PgRouting 2.4.0
 Mapnik 3.0.12
-Mod-tile
+Mod-tile (Fork: SomeoneElseOSM)
 Osm2pgsql 0.9.3 dev
 Osm2pgrouting 2.4.0
 NodeJs 8.x
