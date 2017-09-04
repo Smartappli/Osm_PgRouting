@@ -1,5 +1,16 @@
 This script help you to install pgrouting and openstreetmap automatically on a Ubuntu 16.04.3 LTS
 
+Scripts installed
+Apache 2.4.18
+Gravitystorm-carto 4.2.0
+PgRouting 2.4.0
+Mapnik 3.0.12
+Mod-tile
+Osm2pgsql 0.9.3 dev
+Osm2pgrouting 2.4.0
+NodeJs 8.x
+node-carto 0.18.2
+
 First create an osm user
 sudo adduser osm
 
