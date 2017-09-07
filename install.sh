@@ -49,7 +49,7 @@ sudo chown osm:osm /var/run/renderd
 # pgrouting 2.4.2
 apt install -y packaging-dev checkinstall libboost-graph-dev libpq-dev libexpat1-dev postgresql-client libboost-program-options-dev libcgal-dev postgresql-server-dev-9.6
 apt install -y python-sphinx texlive doxygen 
-wget https://https://github.com/pgRouting/pgrouting/archive/v2.4.2.zip
+wget https://github.com/pgRouting/pgrouting/archive/v2.4.2.zip
 unzip v2.4.2.zip
 cd pgrouting-2.4.2
 mkdir build
@@ -73,6 +73,7 @@ psql -c "CREATE EXTENSION postgis;" -d bicycles
 psql -c "CREATE EXTENSION pgrouting;" -d bicycles
 exit
 # osm2pgrouting
+cd ~/src
 wget https://github.com/pgRouting/osm2pgrouting/archive/v2.2.0.zip
 unzip v2.2.0.zip
 cd osm2pgrouting-2.2.0
@@ -87,6 +88,7 @@ git clone https://github.com/gravitystorm/openstreetmap-carto.git
 cd openstreetmap-carto
 carto -a "3.0.12" project.mml > style.xml 
 scripts/get-shapefiles.py
+exit
 # On charge les données pgrouting
 sudo apt-get install -y lbzip2
 cd /opt
