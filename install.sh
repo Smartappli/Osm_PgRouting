@@ -46,12 +46,12 @@ sudo mkdir /var/lib/mod_tile
 sudo chown osm:osm /var/lib/mod_tile
 sudo mkdir /var/run/renderd
 sudo chown osm:osm /var/run/renderd
-# pgrouting 2.4.2
+# pgrouting 2.5.0
 apt install -y packaging-dev checkinstall libboost-graph-dev libpq-dev libexpat1-dev postgresql-client libboost-program-options-dev libcgal-dev postgresql-server-dev-9.6
 apt install -y python-sphinx texlive doxygen 
-wget https://github.com/pgRouting/pgrouting/archive/v2.4.2.zip
-unzip v2.4.2.zip
-cd pgrouting-2.4.2
+wget https://github.com/pgRouting/pgrouting/archive/v2.5.0.zip
+unzip v2.5.0.zip
+cd pgrouting-2.5.0
 mkdir build
 cd build
 cmake -DWITH_DOC=ON ..
