@@ -104,7 +104,7 @@ cd ~
 wget -c http://planet.osm.org/pbf/planet-latest.osm.pbf
 osm2pgsql --create --slim -G -d gis -C 40000 --hstore-all -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua --number-processes 8 --flat-nodes /var/lib/flat_nodes/flat-nodes.bin planet-latest.osm.pbf
 rm planet-latest.osm.pbf
-psql -d osmdb -f indexes.sql
+psql -d gis -f indexes.sql
 exit
 cd ~
 sed 's/XML=\/home\/renderaccount\/src\/openstreetmap-carto\/mapnik.xml/XML=\/home\/osm\/src\/openstreetmap-carto\/style.xml/' /usr/local/etc/renderd.conf 
