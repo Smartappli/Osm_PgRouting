@@ -5,7 +5,7 @@ Tested on VPS XXL Contabo: https://contabo.com/?show=configurator&vserver_id=180
 Scripts installed
 Apache 2.4.18
 Gravitystorm-carto 4.2.0
-PgRouting 2.4.0
+PgRouting 2.5.0
 Mapnik 3.0.12
 Mod-tile (Fork: SomeoneElseOSM)
 Osm2pgsql 0.9.3 dev
