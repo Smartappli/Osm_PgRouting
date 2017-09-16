@@ -1,4 +1,4 @@
-[![ghit.me](https://ghit.me/badge.svg?repo=smartappli/osm_pgrouting)](https://ghit.me/repo/smartappli/osm_pgrouting)
+[![ghit.me](https://ghit.me/badge.svg?repo=Smartappli/Osm_PgRouting)](https://ghit.me/repo/Smartappli/Osm_PgRouting)
 
 This script help you to install pgrouting and openstreetmap automatically on a Ubuntu 16.04.3 LTS
 
