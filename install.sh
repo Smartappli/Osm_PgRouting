@@ -110,11 +110,6 @@ cd ~
 sed 's/XML=\/home\/renderaccount\/src\/openstreetmap-carto\/mapnik.xml/XML=\/home\/osm\/src\/openstreetmap-carto\/style.xml/' /usr/local/etc/renderd.conf 
 sudo sh -c 'echo "LoadModule tile_module /usr/lib/apache2/modules/mod_tile.so" > /etc/apache2/conf-available/mod_tile.conf'
 sudo a2enconf mod_tile
-LoadTileConfigFile /usr/local/etc/renderd.conf
-ModTileRenderdSocketName /var/run/renderd/renderd.sock
-ModTileRequestTimeout 0
-# Timeout before giving up for a tile to be rendered that is otherwise missing
-ModTileMissingRequestTimeout 30
 sed 's/<\/VirtualHost>/LoadTileConfigFile \/usr\/local\/etc\/renderd.conf/' /etc/apache2/sites-enabled/000-default.conf
 sudo sh -c 'echo "ModTileRenderdSocketName /var/run/renderd/renderd.sock" > /etc/apache2/sites-enabled/000-default.conf'
 sudo sh -c 'echo "ModTileRequestTimeout 0" > /etc/apache2/sites-enabled/000-default.conf'
@@ -122,7 +117,6 @@ sudo sh -c 'ModTileMissingRequestTimeout 30" > /etc/apache2/sites-enabled/000-de
 sudo sh -c 'echo "</VirtualHost>" > /etc/apache2/sites-enabled/000-default.conf'
 sudo service apache2 reload
 sudo service apache2 reload
-#nano ~/src/mod_tile/debian/renderd.init
 sed 's/RUNASUSER=renderaccount/RUNASUSER=osm/' ~/src/mod_tile/debian/renderd.init
 sudo cp ~/src/mod_tile/debian/renderd.init /etc/init.d/renderd
 sudo chmod u+x /etc/init.d/renderd
