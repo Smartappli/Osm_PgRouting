@@ -1,5 +1,3 @@
-[![ghit.me](https://ghit.me/badge.svg?repo=Smartappli/Osm_PgRouting)](https://ghit.me/repo/Smartappli/Osm_PgRouting)
-
 This script help you to install pgrouting and openstreetmap automatically on a Ubuntu 16.04.3 LTS
 
 Tested on VPS XXL Contabo: https://contabo.com/?show=configurator&vserver_id=180
