@@ -81,7 +81,7 @@ cmake -H. -Bbuild
 cd build/
 make
 make install
-# openstreetmap-carto 4.2.0
+# openstreetmap-carto 4.3.0
 su - osm
 cd ~
 git clone https://github.com/gravitystorm/openstreetmap-carto.git
