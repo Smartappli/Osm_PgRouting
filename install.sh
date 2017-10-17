@@ -11,7 +11,7 @@ sudo apt install -y fonts-noto-cjk fonts-noto-hinted fonts-noto-unhinted fonts-h
 # Tuning de postgresql
 sed 's/md5/trust/' /etc/postgresql/10/main/pg_hba.conf
 sed 's/peer/trust/' /etc/postgresql/10/main/pg_hba.conf
-# osm2pgsql 0.93 dev
+# osm2pgsql 0.94 dev
 mkdir ~/src
 cd ~/src
 git clone git://github.com/openstreetmap/osm2pgsql.git
@@ -71,17 +71,20 @@ psql -c "CREATE EXTENSION pgrouting;" -d cars
 createdb -O osm bicycles
 psql -c "CREATE EXTENSION postgis;" -d bicycles
 psql -c "CREATE EXTENSION pgrouting;" -d bicycles
+createdb -O osm pedestrian
+psql -c "CREATE EXTENSION postgis;" -d pedestrian
+psql -c "CREATE EXTENSION pgrouting;" -d pedestrian
 exit
 # osm2pgrouting
 cd ~/src
-wget https://github.com/pgRouting/osm2pgrouting/archive/v2.2.0.zip
-unzip v2.2.0.zip
-cd osm2pgrouting-2.2.0
+wget https://github.com/pgRouting/osm2pgrouting/archive/v2.3.1.zip
+unzip v2.3.1.zip
+cd osm2pgrouting-2.3.1
 cmake -H. -Bbuild
 cd build/
 make
 make install
-# openstreetmap-carto 4.3.0
+# openstreetmap-carto 4.3.0 dev
 su - osm
 cd ~
 git clone https://github.com/gravitystorm/openstreetmap-carto.git
@@ -97,6 +100,7 @@ sudo lbzip2 -d planet-latest.osm.bz2
 osm2pgrouting --f planet-latest.osm --conf /usr/share/osm2pgrouting/mapconfig.xml --dbname routing --username postgres --addnodes --clean
 osm2pgrouting --f planet-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_cars.xml --dbname cars --username postgres --addnodes --clean
 osm2pgrouting --f planet-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_bicycles.xml --dbname bicycles --username postgres --addnodes --clean
+osm2pgrouting --f planet-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_pedestrian.xml --dbname pedestrian --username postgres --addnodes --clean
 rm planet-latest.osm
 # On charge les données carto
 su - osm
