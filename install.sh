@@ -82,9 +82,9 @@ psql -c "CREATE EXTENSION hstore;" -d pedestrian
 exit
 # osm2pgrouting
 cd ~/src
-wget https://github.com/pgRouting/osm2pgrouting/archive/v2.3.1.zip
-unzip v2.3.1.zip
-cd osm2pgrouting-2.3.1
+wget https://github.com/pgRouting/osm2pgrouting/archive/v2.3.2.zip
+unzip v2.3.2.zip
+cd osm2pgrouting-2.3.2
 cmake -H. -Bbuild
 cd build/
 make
