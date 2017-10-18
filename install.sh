@@ -25,6 +25,7 @@ make install
 sudo apt-get install -y autoconf apache2-dev libtool libxml2-dev libbz2-dev libgeos-dev libgeos++-dev libproj-dev gdal-bin libgdal1-dev libmapnik-dev mapnik-utils python-mapnik
 # mod-tile
 cd ~/src
+
 git clone git://github.com/SomeoneElseOSM/mod_tile.git
 cd mod_tile
 ./autogen.sh
@@ -65,15 +66,19 @@ psql -c "CREATE EXTENSION postgis;" -d gis
 createdb -O osm routing
 psql -c "CREATE EXTENSION postgis;" -d routing
 psql -c "CREATE EXTENSION pgrouting;" -d routing
+psql -c "CREATE EXTENSION hstore;" -d routing
 createdb -O osm cars
 psql -c "CREATE EXTENSION postgis;" -d cars
 psql -c "CREATE EXTENSION pgrouting;" -d cars
+psql -c "CREATE EXTENSION hstore;" -d cars
 createdb -O osm bicycles
 psql -c "CREATE EXTENSION postgis;" -d bicycles
 psql -c "CREATE EXTENSION pgrouting;" -d bicycles
+psql -c "CREATE EXTENSION hstore;" -d bicycles
 createdb -O osm pedestrian
 psql -c "CREATE EXTENSION postgis;" -d pedestrian
 psql -c "CREATE EXTENSION pgrouting;" -d pedestrian
+psql -c "CREATE EXTENSION hstore;" -d pedestrian
 exit
 # osm2pgrouting
 cd ~/src
