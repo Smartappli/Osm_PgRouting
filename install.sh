@@ -5,12 +5,12 @@ sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo apt update
 sudo apt upgrade -y
-sudo apt install -y osmosis postgresql-10 postgresql-10-postgis-2.4 postgresql-contrib-10
+sudo apt install -y osmosis postgresql-10.1 postgresql-10.1-postgis-2.4 postgresql-contrib-10.1
 sudo apt install -y git autoconf libtool libxml2-dev libbz2-dev libgeos-dev libgeos++-dev libproj-dev gdal-bin libgdal-dev g++ libmapnik-dev mapnik-utils python-mapnik
 sudo apt install -y fonts-noto-cjk fonts-noto-hinted fonts-noto-unhinted fonts-hanazono ttf-unifont fonts-dejavu-core fonts-droid-fallback ttf-unifont fonts-sipa-arundina fonts-sil-padauk fonts-khmeros fonts-beng-extra fonts-gargi fonts-taml-tscu fonts-tibetan-machine
 # Tuning de postgresql
-sed 's/md5/trust/' /etc/postgresql/10/main/pg_hba.conf
-sed 's/peer/trust/' /etc/postgresql/10/main/pg_hba.conf
+sed 's/md5/trust/' /etc/postgresql/10.1/main/pg_hba.conf
+sed 's/peer/trust/' /etc/postgresql/10.1/main/pg_hba.conf
 # osm2pgsql 0.94 dev
 mkdir ~/src
 cd ~/src
@@ -47,12 +47,12 @@ sudo mkdir /var/lib/mod_tile
 sudo chown osm:osm /var/lib/mod_tile
 sudo mkdir /var/run/renderd
 sudo chown osm:osm /var/run/renderd
-# pgrouting 2.5.1
+# pgrouting 2.5.2
 apt install -y packaging-dev checkinstall libboost-graph-dev libpq-dev libexpat1-dev postgresql-client libboost-program-options-dev libcgal-dev libpqxx-dev postgresql-server-dev-10
 apt install -y python-sphinx texlive doxygen 
-wget https://github.com/pgRouting/pgrouting/archive/v2.5.1.zip
-unzip v2.5.1.zip
-cd pgrouting-2.5.1
+wget https://github.com/pgRouting/pgrouting/archive/v2.5.2.zip
+unzip v2.5.2.zip
+cd pgrouting-2.5.2
 mkdir build
 cd build
 cmake -DWITH_DOC=ON ..
@@ -82,14 +82,14 @@ psql -c "CREATE EXTENSION hstore;" -d pedestrian
 exit
 # osm2pgrouting
 cd ~/src
-wget https://github.com/pgRouting/osm2pgrouting/archive/v2.3.2.zip
-unzip v2.3.2.zip
-cd osm2pgrouting-2.3.2
+wget https://github.com/pgRouting/osm2pgrouting/archive/v2.3.3.zip
+unzip v2.3.3.zip
+cd osm2pgrouting-2.3.3
 cmake -H. -Bbuild
 cd build/
 make
 make install
-# openstreetmap-carto 4.3.0 dev
+# openstreetmap-carto 4.6.0 dev
 su - osm
 cd ~
 git clone https://github.com/gravitystorm/openstreetmap-carto.git
