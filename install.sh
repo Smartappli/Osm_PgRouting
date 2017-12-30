@@ -5,12 +5,12 @@ sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo apt update
 sudo apt upgrade -y
-sudo apt install -y osmosis postgresql-10.1 postgresql-10.1-postgis-2.4 postgresql-contrib-10.1
+sudo apt install -y osmosis postgresql-10 postgresql-10.1-postgis-2.4 postgresql-contrib-10
 sudo apt install -y git autoconf libtool libxml2-dev libbz2-dev libgeos-dev libgeos++-dev libproj-dev gdal-bin libgdal-dev g++ libmapnik-dev mapnik-utils python-mapnik
 sudo apt install -y fonts-noto-cjk fonts-noto-hinted fonts-noto-unhinted fonts-hanazono ttf-unifont fonts-dejavu-core fonts-droid-fallback ttf-unifont fonts-sipa-arundina fonts-sil-padauk fonts-khmeros fonts-beng-extra fonts-gargi fonts-taml-tscu fonts-tibetan-machine
 # Tuning de postgresql
-sed 's/md5/trust/' /etc/postgresql/10.1/main/pg_hba.conf
-sed 's/peer/trust/' /etc/postgresql/10.1/main/pg_hba.conf
+sed 's/md5/trust/' /etc/postgresql/10/main/pg_hba.conf
+sed 's/peer/trust/' /etc/postgresql/10/main/pg_hba.conf
 # osm2pgsql 0.94 dev
 mkdir ~/src
 cd ~/src
@@ -102,10 +102,10 @@ sudo apt-get install -y lbzip2
 cd /opt
 wget -c http://planet.osm.org/planet/planet-latest.osm.bz2
 sudo lbzip2 -d planet-latest.osm.bz2
-osm2pgrouting --f planet-latest.osm --conf /usr/share/osm2pgrouting/mapconfig.xml --dbname routing --username postgres --addnodes --clean
-osm2pgrouting --f planet-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_cars.xml --dbname cars --username postgres --addnodes --clean
-osm2pgrouting --f planet-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_bicycles.xml --dbname bicycles --username postgres --addnodes --clean
-osm2pgrouting --f planet-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_pedestrian.xml --dbname pedestrian --username postgres --addnodes --clean
+osm2pgrouting --f planet-latest.osm --conf /usr/share/osm2pgrouting/mapconfig.xml --dbname routing --username postgres --addnodes --attributes --tags --clean
+osm2pgrouting --f planet-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_cars.xml --dbname cars --username postgres --addnodes --attributes --tags --clean
+osm2pgrouting --f planet-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_bicycles.xml --dbname bicycles --username postgres --addnodes --attributes --tags --clean
+osm2pgrouting --f planet-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_pedestrian.xml --dbname pedestrian --username postgres --addnodes --attributes --tags --clean
 rm planet-latest.osm
 # On charge les données carto
 su - osm
