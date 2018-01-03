@@ -25,7 +25,6 @@ make install
 sudo apt-get install -y autoconf apache2-dev libtool libxml2-dev libbz2-dev libgeos-dev libgeos++-dev libproj-dev gdal-bin libgdal1-dev libmapnik-dev mapnik-utils python-mapnik
 # mod-tile
 cd ~/src
-
 git clone git://github.com/SomeoneElseOSM/mod_tile.git
 cd mod_tile
 ./autogen.sh
@@ -35,6 +34,7 @@ sudo make install
 sudo make install-mod_tile
 sudo ldconfig
 # nodejs 8.x
+cd ~/src
 curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
 sudo bash nodesource_setup.sh
 sudo apt-get install -y nodejs
@@ -111,7 +111,7 @@ rm planet-latest.osm
 su - osm
 cd ~
 wget -c http://planet.osm.org/pbf/planet-latest.osm.pbf
-osm2pgsql --create --slim -G -d gis -C 40000 --hstore-all -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua --number-processes 8 --flat-nodes /var/lib/flat_nodes/flat-nodes.bin planet-latest.osm.pbf
+osm2pgsql --create --slim -G -d gis -C 40000 --hstore -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua --number-processes 8 --flat-nodes /var/lib/flat_nodes/flat-nodes.bin planet-latest.osm.pbf
 rm planet-latest.osm.pbf
 psql -d gis -f indexes.sql
 exit
