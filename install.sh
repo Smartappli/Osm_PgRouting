@@ -11,7 +11,7 @@ sudo apt install -y fonts-noto-cjk fonts-noto-hinted fonts-noto-unhinted fonts-h
 # Tuning de postgresql
 sed 's/md5/trust/' /etc/postgresql/10/main/pg_hba.conf
 sed 's/peer/trust/' /etc/postgresql/10/main/pg_hba.conf
-# osm2pgsql 0.94 dev
+# osm2pgsql 0.95 dev
 mkdir ~/src
 cd ~/src
 git clone git://github.com/openstreetmap/osm2pgsql.git
@@ -21,7 +21,7 @@ mkdir build && cd build
 cmake ..
 make
 make install
-# mapnik 3.0.12
+# mapnik 3.0.16
 sudo apt-get install -y autoconf apache2-dev libtool libxml2-dev libbz2-dev libgeos-dev libgeos++-dev libproj-dev gdal-bin libgdal1-dev libmapnik-dev mapnik-utils python-mapnik
 # mod-tile
 cd ~/src
@@ -94,7 +94,7 @@ su - osm
 cd ~
 git clone https://github.com/gravitystorm/openstreetmap-carto.git
 cd openstreetmap-carto
-carto -a "3.0.12" project.mml > style.xml 
+carto -a "3.0.16" project.mml > style.xml 
 scripts/get-shapefiles.py
 exit
 # On charge les données pgrouting
