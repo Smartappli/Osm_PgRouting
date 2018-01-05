@@ -100,13 +100,83 @@ exit
 # On charge les données pgrouting
 sudo apt-get install -y lbzip2
 cd /opt
-wget -c http://planet.osm.org/planet/planet-latest.osm.bz2
-sudo lbzip2 -d planet-latest.osm.bz2
-osm2pgrouting --f planet-latest.osm --conf /usr/share/osm2pgrouting/mapconfig.xml --dbname routing --username postgres --addnodes --attributes --tags --clean
-osm2pgrouting --f planet-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_cars.xml --dbname cars --username postgres --addnodes --attributes --tags --clean
-osm2pgrouting --f planet-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_bicycles.xml --dbname bicycles --username postgres --addnodes --attributes --tags --clean
-osm2pgrouting --f planet-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_pedestrian.xml --dbname pedestrian --username postgres --addnodes --attributes --tags --clean
-rm planet-latest.osm
+wget -c http://download.geofabrik.de/africa-latest.osm.bz2
+wget -c http://download.geofabrik.de/europe/belgium-latest.osm.bz2
+wget -c http://download.geofabrik.de/europe/ireland-and-northern-ireland-latest.osm.bz2
+wget -c http://download.geofabrik.de/europe/luxembourg-latest.osm.bz2
+wget -c http://download.geofabrik.de/europe/netherlands-latest.osm.bz2
+wget -c http://download.geofabrik.de/europe/portugal-latest.osm.bz2
+wget -c http://download.geofabrik.de/europe/italy-latest.osm.bz2
+wget -c http://download.geofabrik.de/europe/france-latest.osm.bz2
+wget -c http://download.geofabrik.de/europe/great-britain-latest.osm.bz2
+wget -c http://download.geofabrik.de/europe/greece-latest.osm.bz2
+wget -c http://download.geofabrik.de/europe/turkey-latest.osm.bz2
+sudo lbzip2 -d africa-latest.osm.bz2
+sudo lbzip2 -d belgium-latest.osm.bz2
+sudo lbzip2 -d ireland-and-northern-ireland-latest.osm.bz2
+sudo lbzip2 -d luxembourg-latest.osm.bz2
+sudo lbzip2 -d netherlands-latest.osm.bz2
+sudo lbzip2 -d portugal-latest.osm.bz2
+sudo lbzip2 -d italy-latest.osm.bz2
+sudo lbzip2 -d france-latest.osm.bz2
+sudo lbzip2 -d great-britain-latest.osm.bz2
+sudo lbzip2 -d greece-latest.osm.bz2
+sudo lbzip2 -d turkey-latest.osm.bz2
+osm2pgrouting --f africa-latest.osm --conf /usr/share/osm2pgrouting/mapconfig.xml --dbname routing --username postgres --addnodes --attributes --tags --clean
+osm2pgrouting --f africa-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_cars.xml --dbname cars --username postgres --addnodes --attributes --tags --clean
+osm2pgrouting --f africa-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_bicycles.xml --dbname bicycles --username postgres --addnodes --attributes --tags --clean
+osm2pgrouting --f africa-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_pedestrian.xml --dbname pedestrian --username postgres --addnodes --attributes --tags --clean
+osm2pgrouting --f belgium-latest.osm --conf /usr/share/osm2pgrouting/mapconfig.xml --dbname routing --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f belgium-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_cars.xml --dbname cars --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f belgium-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_bicycles.xml --dbname bicycles --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f belgium-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_pedestrian.xml --dbname pedestrian --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f ireland-and-northern-ireland-latest.osm --conf /usr/share/osm2pgrouting/mapconfig.xml --dbname routing --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f ireland-and-northern-ireland-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_cars.xml --dbname cars --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f ireland-and-northern-ireland-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_bicycles.xml --dbname bicycles --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f ireland-and-northern-ireland-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_pedestrian.xml --dbname pedestrian --username postgres --addnodes --attributes --tags --no-index
+osm2pgrouting --f luxembourg-latest.osm --conf /usr/share/osm2pgrouting/mapconfig.xml --dbname routing --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f luxembourg-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_cars.xml --dbname cars --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f luxembourg-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_bicycles.xml --dbname bicycles --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f luxembourg-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_pedestrian.xml --dbname pedestrian --username postgres --addnodes --attributes --tags --no-index  
+osm2pgrouting --f netherlands-latest.osm --conf /usr/share/osm2pgrouting/mapconfig.xml --dbname routing --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f netherlands-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_cars.xml --dbname cars --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f netherlands-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_bicycles.xml --dbname bicycles --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f netherlands-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_pedestrian.xml --dbname pedestrian --username postgres --addnodes --attributes --tags --no-index  
+osm2pgrouting --f portugal-latest.osm --conf /usr/share/osm2pgrouting/mapconfig.xml --dbname routing --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f portugal-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_cars.xml --dbname cars --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f portugal-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_bicycles.xml --dbname bicycles --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f portugal-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_pedestrian.xml --dbname pedestrian --username postgres --addnodes --attributes --tags --no-index  
+osm2pgrouting --f italy-latest.osm --conf /usr/share/osm2pgrouting/mapconfig.xml --dbname routing --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f italy-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_cars.xml --dbname cars --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f italy-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_bicycles.xml --dbname bicycles --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f italy-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_pedestrian.xml --dbname pedestrian --username postgres --addnodes --attributes --tags --no-index  
+osm2pgrouting --f france-latest.osm --conf /usr/share/osm2pgrouting/mapconfig.xml --dbname routing --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f france-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_cars.xml --dbname cars --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f france-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_bicycles.xml --dbname bicycles --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f france-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_pedestrian.xml --dbname pedestrian --username postgres --addnodes --attributes --tags --no-index
+osm2pgrouting --f great-britain-latest.osm --conf /usr/share/osm2pgrouting/mapconfig.xml --dbname routing --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f great-britain-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_cars.xml --dbname cars --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f great-britain-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_bicycles.xml --dbname bicycles --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f great-britain-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_pedestrian.xml --dbname pedestrian --username postgres --addnodes --attributes --tags --no-index  
+osm2pgrouting --f greece-latest.osm --conf /usr/share/osm2pgrouting/mapconfig.xml --dbname routing --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f greece-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_cars.xml --dbname cars --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f greece-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_bicycles.xml --dbname bicycles --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f greece-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_pedestrian.xml --dbname pedestrian --username postgres --addnodes --attributes --tags --no-index    
+osm2pgrouting --f turkey-latest.osm --conf /usr/share/osm2pgrouting/mapconfig.xml --dbname routing --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f turkey-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_cars.xml --dbname cars --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f turkey-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_bicycles.xml --dbname bicycles --username postgres --addnodes --attributes --tags --no-index 
+osm2pgrouting --f turkey-latest.osm --conf /usr/share/osm2pgrouting/mapconfig_for_pedestrian.xml --dbname pedestrian --username postgres --addnodes --attributes --tags --no-index
+rm africa-latest.osm
+rm belgium-latest.osm
+rm ireland-and-northern-ireland-latest.osm
+rm luxembourg-latest.osm
+rm netherlands-latest.osm
+rm portugal-latest.osm
+rm italy-latest.osm
+rm france-latest.osm
+rm great-britain-latest.osm
+rm greece-latest.osm
+rm turkey-latest.osm
 # On charge les données carto
 su - osm
 cd ~
