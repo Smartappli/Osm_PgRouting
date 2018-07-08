@@ -65,7 +65,7 @@ RUN apt install -y packaging-dev checkinstall libboost-graph-dev libpq-dev libex
       && apt install -y python-sphinx texlive doxygen \
       && wget https://github.com/pgRouting/pgrouting/archive/v2.6.0.zip \
       && unzip v2.6.0.zip \
-      cd pgrouting-2.6.0 \
+      && cd pgrouting-2.6.0 \
       && mkdir build \
       && cd build \
       && cmake -DWITH_DOC=ON .. \
