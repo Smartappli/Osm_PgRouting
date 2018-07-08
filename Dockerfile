@@ -53,3 +53,17 @@ RUN sudo mkdir -p /var/lib/flat_nodes \
       && sudo chown osm:osm /var/lib/mod_tile \
       && sudo mkdir /var/run/renderd \
       && sudo chown osm:osm /var/run/renderd
+      
+# pgrouting 2.5.2
+RUN apt install -y packaging-dev checkinstall libboost-graph-dev libpq-dev libexpat1-dev postgresql-client libboost-program-options-dev libcgal-dev libpqxx-dev postgresql-server-dev-10 \
+      && apt install -y python-sphinx texlive doxygen \
+      && wget https://github.com/pgRouting/pgrouting/archive/v2.6.0.zip \
+      && unzip v2.6.0.zip \
+      cd pgrouting-2.6.0 \
+      && mkdir build \
+      && cd build \
+      && cmake -DWITH_DOC=ON .. \
+      && make \
+      && sudo make install \
+      && sudo -u postgres -i createuser osm \
+      && sudo -u postgres -i createdb -E utf8 -l en_US.UTF-8 -T template0 -O osm gis
