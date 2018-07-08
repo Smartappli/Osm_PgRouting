@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
 RUN apt-get update \
-      && apt install -y libboost-all-dev git-core tar unzip wget bzip2 build-essential autoconf libtool libxml2-dev libgeos-dev libgeos++-dev libpq-dev libbz2-dev libproj-dev munin-node munin libprotobuf-c0-dev protobuf-c-compiler libfreetype6-dev libpng-dev libwebp-dev libtiff-dev libicu-dev libgdal-dev libcairo-dev libcairomm-1.0-dev apache2 apache2-dev libagg-dev liblua5.2-dev ttf-unifont lua5.1 liblua5.1-dev libgeotiff-epsg \
+      && apt install -y libboost-all-dev git-core tar unzip lbzip2 wget bzip2 build-essential autoconf libtool libxml2-dev libgeos-dev libgeos++-dev libpq-dev libbz2-dev libproj-dev munin-node munin libprotobuf-c0-dev protobuf-c-compiler libfreetype6-dev libpng-dev libwebp-dev libtiff-dev libicu-dev libgdal-dev libcairo-dev libcairomm-1.0-dev apache2 apache2-dev libagg-dev liblua5.2-dev ttf-unifont lua5.1 liblua5.1-dev libgeotiff-epsg \
       && apt install -y sudo nano htop git curl bash \
       && echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
       && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - \
@@ -84,4 +84,14 @@ RUN apt install -y packaging-dev checkinstall libboost-graph-dev libpq-dev libex
       && sudo -u postgres -i createdb -O osm pedestrian \
       && sudo -u postgres -i psql -c "CREATE EXTENSION postgis;" -d pedestrian \
       && sudo -u postgres -i psql -c "CREATE EXTENSION pgrouting;" -d pedestrian \
-      && sudo -u postgres -i psql -c "CREATE EXTENSION hstore;" -d pedestrian
+      && sudo -u postgres -i psql -c "CREATE EXTENSION hstore;" -d pedestrian \
+      
+# osm2pgrouting
+RUN cd ~/src
+      && wget https://github.com/pgRouting/osm2pgrouting/archive/v2.3.5.zip \
+      && unzip v2.3.5.zip \
+      && cd osm2pgrouting-2.3.5 \
+      && cmake -H. -Bbuild \
+      && cd build \
+      && make \
+      && make install      
