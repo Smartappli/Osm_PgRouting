@@ -26,7 +26,7 @@ RUN mkdir ~/src \
       && make \
       && make install
       
-# mapnik 3.0.16
+# mapnik 3.0.19
 RUN sudo apt-get install -y autoconf apache2-dev libtool libxml2-dev libbz2-dev libgeos-dev libgeos++-dev libproj-dev gdal-bin libgdal1-dev libmapnik-dev mapnik-utils python-mapnik
 # mod-tile
 RUN cd ~/src \
@@ -54,7 +54,7 @@ RUN sudo mkdir -p /var/lib/flat_nodes \
       && sudo mkdir /var/run/renderd \
       && sudo chown osm:osm /var/run/renderd
       
-# pgrouting 2.5.2
+# pgrouting 2.6.0
 RUN apt install -y packaging-dev checkinstall libboost-graph-dev libpq-dev libexpat1-dev postgresql-client libboost-program-options-dev libcgal-dev libpqxx-dev postgresql-server-dev-10 \
       && apt install -y python-sphinx texlive doxygen \
       && wget https://github.com/pgRouting/pgrouting/archive/v2.6.0.zip \
@@ -66,4 +66,22 @@ RUN apt install -y packaging-dev checkinstall libboost-graph-dev libpq-dev libex
       && make \
       && sudo make install \
       && sudo -u postgres -i createuser osm \
-      && sudo -u postgres -i createdb -E utf8 -l en_US.UTF-8 -T template0 -O osm gis
+      && sudo -u postgres -i createdb -E utf8 -l en_US.UTF-8 -T template0 -O osm gis \
+      && sudo -u postgres -i psql -c "CREATE EXTENSION hstore;" -d gis \
+      && sudo -u postgres -i psql -c "CREATE EXTENSION postgis;" -d gis \
+      && sudo -u postgres -i createdb -O osm routing \
+      && sudo -u postgres -i psql -c "CREATE EXTENSION postgis;" -d routing \
+      && sudo -u postgres -i psql -c "CREATE EXTENSION pgrouting;" -d routing \
+      && sudo -u postgres -i psql -c "CREATE EXTENSION hstore;" -d routing \
+      && sudo -u postgres -i createdb -O osm cars \
+      && sudo -u postgres -i psql -c "CREATE EXTENSION postgis;" -d cars \
+      && sudo -u postgres -i psql -c "CREATE EXTENSION pgrouting;" -d cars \
+      && sudo -u postgres -i psql -c "CREATE EXTENSION hstore;" -d cars \
+      && sudo -u postgres -i createdb -O osm bicycles \
+      && sudo -u postgres -i psql -c "CREATE EXTENSION postgis;" -d bicycles \
+      && sudo -u postgres -i psql -c "CREATE EXTENSION pgrouting;" -d bicycles \
+      && sudo -u postgres -i psql -c "CREATE EXTENSION hstore;" -d bicycles \
+      && sudo -u postgres -i createdb -O osm pedestrian \
+      && sudo -u postgres -i psql -c "CREATE EXTENSION postgis;" -d pedestrian \
+      && sudo -u postgres -i psql -c "CREATE EXTENSION pgrouting;" -d pedestrian \
+      && sudo -u postgres -i psql -c "CREATE EXTENSION hstore;" -d pedestrian
