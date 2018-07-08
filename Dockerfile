@@ -46,3 +46,10 @@ RUN cd ~/src \
       && sudo apt-get install -y nodejs \
       && npm install -g carto \
    
+# Tile directories
+RUN sudo mkdir -p /var/lib/flat_nodes \
+      && sudo chown osm:osm /var/lib/flat_nodes \
+      && sudo mkdir /var/lib/mod_tile \
+      && sudo chown osm:osm /var/lib/mod_tile \
+      && sudo mkdir /var/run/renderd \
+      && sudo chown osm:osm /var/run/renderd
