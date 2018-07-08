@@ -48,7 +48,7 @@ RUN cd ~/src \
       && curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh \
       && sudo bash nodesource_setup.sh \
       && sudo apt-get install -y nodejs \
-      && npm install -g carto \
+      && npm install -g carto 
    
 # Tile directories
 RUN sudo mkdir -p /var/lib/flat_nodes \
