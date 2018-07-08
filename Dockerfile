@@ -25,3 +25,24 @@ RUN mkdir ~/src \
       && cmake .. \
       && make \
       && make install
+      
+# mapnik 3.0.16
+RUN sudo apt-get install -y autoconf apache2-dev libtool libxml2-dev libbz2-dev libgeos-dev libgeos++-dev libproj-dev gdal-bin libgdal1-dev libmapnik-dev mapnik-utils python-mapnik
+# mod-tile
+RUN cd ~/src \
+      && git clone git://github.com/SomeoneElseOSM/mod_tile.git \
+      && cd mod_tile \
+      && ./autogen.sh \
+      && ./configure \
+      && make \
+      sudo make install \
+      sudo make install-mod_tile \
+      sudo ldconfig
+
+# nodejs 8.x
+RUN cd ~/src \
+      && curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh \
+      && sudo bash nodesource_setup.sh \
+      && sudo apt-get install -y nodejs \
+      && npm install -g carto \
+   
