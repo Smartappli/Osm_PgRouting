@@ -87,7 +87,7 @@ RUN apt install -y packaging-dev checkinstall libboost-graph-dev libpq-dev libex
       && sudo -u postgres -i psql -c "CREATE EXTENSION hstore;" -d pedestrian \
       
 # osm2pgrouting
-RUN cd ~/src
+RUN cd ~/src \
       && wget https://github.com/pgRouting/osm2pgrouting/archive/v2.3.5.zip \
       && unzip v2.3.5.zip \
       && cd osm2pgrouting-2.3.5 \
