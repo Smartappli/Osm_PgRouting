@@ -95,3 +95,16 @@ RUN cd ~/src
       && cd build \
       && make \
       && make install      
+
+# openstreetmap-carto 4.12 dev
+RUN su - osm \
+      && cd ~ \
+      && git clone https://github.com/gravitystorm/openstreetmap-carto.git \
+      && cd openstreetmap-carto \
+      && carto -a "3.0.10" project.mml > style.xml \ 
+      && scripts/get-shapefiles.py
+      
+RUN wget -c http://planet.osm.org/pbf/planet-latest.osm.pbf \
+      && osm2pgsql --create --slim -G -d gis -C 16000 --hstore -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua --number-processes 1 --flat-nodes /var/lib/flat_nodes/flat-nodes.bin planet-latest.osm.pbf \
+      && rm planet-latest.osm.pbf \
+      && sudo -u postgres -i psql -d gis -f indexes.sql
