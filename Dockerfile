@@ -31,7 +31,7 @@ RUN mkdir ~/src \
       && make install
       
 # mapnik 3.0.19
-RUN sudo apt-get install -y autoconf apache2-dev libtool libxml2-dev libbz2-dev libgeos-dev libgeos++-dev libproj-dev gdal-bin libgdal1-dev libmapnik-dev mapnik-utils python-mapnik
+RUN sudo apt-get install -y autoconf apache2-dev libtool libxml2-dev libbz2-dev libgeos-dev libgeos++-dev libproj-dev gdal-bin libgdal-dev libmapnik-dev mapnik-utils python-mapnik
 # mod-tile
 RUN cd ~/src \
       && git clone git://github.com/SomeoneElseOSM/mod_tile.git \
