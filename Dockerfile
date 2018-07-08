@@ -73,24 +73,24 @@ RUN apt install -y packaging-dev checkinstall libboost-graph-dev libpq-dev libex
       && sudo make install \
       && sudo -u postgres bash -c "psql -c \"CREATE USER osm WITH PASSWORD 'osm';\"" \
       && sudo -u postgres createdb -E utf8 -l en_US.UTF-8 -T template0 -O osm gis \
-      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION hstore;" -d gis\"" \
-      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION postgis;" -d gis\"" \
+      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION hstore;\" -d gis" \
+      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION postgis;\" -d gis" \
       && sudo -u postgres createdb -O osm routing \
-      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION postgis;" -d routing\"" \
-      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION pgrouting;" -d routing\"" \
-      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION hstore;" -d routing\"" \
+      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION postgis;\" -d routing" \
+      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION pgrouting;\" -d routing" \
+      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION hstore;\" -d routing" \
       && sudo -u postgres createdb -O osm cars \
-      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION postgis;" -d cars\"" \
-      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION pgrouting;" -d cars\"" \
-      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION hstore;" -d cars\"" \
+      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION postgis;\" -d cars" \
+      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION pgrouting;\" -d cars" \
+      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION hstore;\" -d cars" \
       && sudo -u postgres createdb -O osm bicycles \
-      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION postgis;" -d bicycles\"" \
-      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION pgrouting;" -d bicycles\"" \
-      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION hstore;" -d bicycles\"" \
+      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION postgis;\" -d bicycles" \
+      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION pgrouting;\" -d bicycles" \
+      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION hstore;\" -d bicycles" \
       && sudo -u postgres createdb -O osm pedestrian \
-      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION postgis;" -d pedestrian\"" \
-      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION pgrouting;" -d pedestrian\"" \
-      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION hstore;" -d pedestrian\"" \
+      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION postgis;\" -d pedestrian" \
+      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION pgrouting;\" -d pedestrian" \
+      && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION hstore;\" -d pedestrian" \
       
 # osm2pgrouting
 RUN cd ~/src \
