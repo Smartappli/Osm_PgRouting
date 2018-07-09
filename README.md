@@ -4,12 +4,12 @@ Tested on VPS XXL Contabo: https://contabo.com/?show=configurator&vserver_id=180
 
 Scripts installed
 * Apache 2.4.18
-* Gravitystorm-carto 4.6.0
-* PgRouting 2.5.2
-* Mapnik 3.0.12
+* Gravitystorm-carto 4.12.1
+* PgRouting 2.6.0
+* Mapnik 3.0.19
 * Mod-tile (Fork: SomeoneElseOSM)
 * Osm2pgsql 0.9.4 dev
-* Osm2pgrouting 2.3.3
+* Osm2pgrouting 2.3.5
 * NodeJs 8.x
 * node-carto 0.18.2
 
