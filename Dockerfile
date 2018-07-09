@@ -73,8 +73,9 @@ RUN apt install -y packaging-dev checkinstall libboost-graph-dev libpq-dev libex
       && sudo make install 
       
 RUN service postgresql start \
+      && sudo locale-gen en_US.UTF-8 \
       && sudo -u postgres bash -c "psql -c \"CREATE USER osm WITH PASSWORD 'osm';\"" \
-      && sudo -u postgres createdb -E utf8 -l be_FR.UTF-8 -T template0 -O osm gis \
+      && sudo -u postgres createdb -E utf8 -l en_US.UTF-8 -T template0 -O osm gis \
       && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION hstore;\" -d gis" \
       && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION postgis;\" -d gis" \
       && sudo -u postgres createdb -O osm routing \
