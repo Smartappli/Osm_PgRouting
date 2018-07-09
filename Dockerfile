@@ -8,7 +8,8 @@ RUN echo "tzdata tzdata/Areas select Europe" | debconf-set-selections \
 
 RUN apt-get update \
       && apt install -y libboost-all-dev git-core tar unzip lbzip2 wget bzip2 build-essential autoconf libtool libxml2-dev libgeos-dev libgeos++-dev libpq-dev libbz2-dev libproj-dev munin-node munin libprotobuf-c0-dev protobuf-c-compiler libfreetype6-dev libpng-dev libwebp-dev libtiff-dev libicu-dev libgdal-dev libcairo-dev libcairomm-1.0-dev apache2 apache2-dev libagg-dev liblua5.2-dev ttf-unifont lua5.1 liblua5.1-dev libgeotiff-epsg \
-      && apt install -y sudo nano htop git curl bash \
+      && apt install -y sudo nano htop git curl bash locales \
+      && sudo locale-gen en_US.UTF-8 \
       && echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
       && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - \
       && apt update \
@@ -73,7 +74,6 @@ RUN apt install -y packaging-dev checkinstall libboost-graph-dev libpq-dev libex
       && sudo make install 
       
 RUN service postgresql start \
-      && sudo locale-gen en_US.UTF-8 \
       && sudo -u postgres bash -c "psql -c \"CREATE USER osm WITH PASSWORD 'osm';\"" \
       && sudo -u postgres createdb -E utf8 -l en_US.UTF-8 -T template0 -O osm gis \
       && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION hstore;\" -d gis" \
