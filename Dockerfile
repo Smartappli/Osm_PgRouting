@@ -124,9 +124,10 @@ RUN su - osm \
       && carto -a "3.0.10" project.mml > style.xml \ 
       && scripts/get-shapefiles.py
       
-RUN wget -c http://download.geofabrik.de/africa/algeria-latest.osm.pbf \
+RUN cd ~ \
+      && wget -c http://download.geofabrik.de/africa/algeria-latest.osm.pbf \
       && osm2pgsql --create --slim -G -d gis -C 2000 --hstore -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua --number-processes 1 --flat-nodes /var/lib/flat_nodes/flat-nodes.bin planet-latest.osm.pbf \
-      && rm planet-latest.osm.pbf \
+      && rm algeria-latest.osm.pbf \
       && sudo -u postgres bash -c "psql -d gis -f indexes.sql" \
       && exit \
       && cd ~ \
