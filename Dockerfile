@@ -127,4 +127,22 @@ RUN su - osm \
 RUN wget -c http://download.geofabrik.de/aalgeria-latest.osm.pbf \
       osm2pgsql --create --slim -G -d gis -C 2000 --hstore -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua --number-processes 1 --flat-nodes /var/lib/flat_nodes/flat-nodes.bin planet-latest.osm.pbf \
       && rm planet-latest.osm.pbf \
-      && sudo -u postgres bash -c "psql -d gis -f indexes.sql"
+      && sudo -u postgres bash -c "psql -d gis -f indexes.sql" \
+      && exit \
+      && cd ~ \
+      && sed 's/XML=\/home\/renderaccount\/src\/openstreetmap-carto\/mapnik.xml/XML=\/home\/osm\/src\/openstreetmap-carto\/style.xml/' /usr/local/etc/renderd.conf \
+      && sudo sh -c 'echo "LoadModule tile_module /usr/lib/apache2/modules/mod_tile.so" > /etc/apache2/conf-available/mod_tile.conf' \
+      && sudo a2enconf mod_tile \
+      && sed 's/<\/VirtualHost>/LoadTileConfigFile \/usr\/local\/etc\/renderd.conf/' /etc/apache2/sites-enabled/000-default.conf \
+      && sudo sh -c 'echo "ModTileRenderdSocketName /var/run/renderd/renderd.sock" > /etc/apache2/sites-enabled/000-default.conf' \
+      && sudo sh -c 'echo "ModTileRequestTimeout 0" > /etc/apache2/sites-enabled/000-default.conf' \
+      && sudo sh -c 'ModTileMissingRequestTimeout 30" > /etc/apache2/sites-enabled/000-default.conf' \
+      && sudo sh -c 'echo "</VirtualHost>" > /etc/apache2/sites-enabled/000-default.conf' \
+      && sudo service apache2 reload \
+      && sudo service apache2 reload \
+      && sed 's/RUNASUSER=renderaccount/RUNASUSER=osm/' ~/src/mod_tile/debian/renderd.init \
+      && sudo cp ~/src/mod_tile/debian/renderd.init /etc/init.d/renderd \
+      && sudo chmod u+x /etc/init.d/renderd \
+      && sudo cp ~/src/mod_tile/debian/renderd.service /lib/systemd/system/ \
+      && sudo /etc/init.d/renderd start \
+      && sudo systemctl enable renderd
