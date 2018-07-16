@@ -105,6 +105,7 @@ RUN service postgresql start \
       && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION postgis;\" -d pedestrian" \
       && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION pgrouting;\" -d pedestrian" \
       && sudo -u postgres bash -c "psql -c \"CREATE EXTENSION hstore;\" -d pedestrian" \
+      && service postgresql stop \
       
 # osm2pgrouting
 RUN cd ~/src \
@@ -124,7 +125,8 @@ RUN su - osm \
       && carto -a "3.0.10" project.mml > style.xml \ 
       && scripts/get-shapefiles.py
       
-RUN cd ~ \
+RUN service postgresql start \
+      && cd ~ \
       && wget -c http://download.geofabrik.de/africa/algeria-latest.osm.pbf \
       && osm2pgsql --create --slim -G -d gis -C 2000 --hstore -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua --number-processes 1 --flat-nodes /var/lib/flat_nodes/flat-nodes.bin planet-latest.osm.pbf \
       && rm algeria-latest.osm.pbf \
