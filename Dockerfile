@@ -1,14 +1,13 @@
 FROM ubuntu:18.04
-ENV DEBIAN_FRONTEND noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
+ENV LANG=fr_BE.UTF-8 \
+TZ=Europe/Brussels
 
 RUN adduser --disabled-password --gecos "" osm
 
-RUN echo "tzdata tzdata/Areas select Europe" | debconf-set-selections \
-&& echo "tzdata tzdata/Zones/Europe select Brussels" | debconf-set-selections 
-
 RUN apt-get update \
       && apt install -y libboost-all-dev git-core tar unzip lbzip2 wget bzip2 build-essential autoconf libtool libxml2-dev libgeos-dev libgeos++-dev libpq-dev libbz2-dev libproj-dev munin-node munin libprotobuf-c0-dev protobuf-c-compiler libfreetype6-dev libpng-dev libwebp-dev libtiff-dev libicu-dev libgdal-dev libcairo-dev libcairomm-1.0-dev apache2 apache2-dev libagg-dev liblua5.2-dev ttf-unifont lua5.1 liblua5.1-dev libgeotiff-epsg \
-      && apt install -y sudo nano htop git curl bash locales apt-utils \
+      && apt install -y sudo nano htop git curl bash tzdata locales debconf apt-utils \
       && sudo locale-gen en_US.UTF-8 \
       && echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
       && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - \
@@ -17,6 +16,18 @@ RUN apt-get update \
       && apt install -y osmosis postgresql-10 postgresql-10-postgis-2.4 postgresql-contrib-10 \
       && apt install -y git autoconf libtool libxml2-dev libbz2-dev libgeos-dev libgeos++-dev libproj-dev gdal-bin libgdal-dev g++ libmapnik-dev mapnik-utils python-mapnik \
       && apt install -y fonts-noto-cjk fonts-noto-hinted fonts-noto-unhinted fonts-hanazono ttf-unifont fonts-dejavu-core fonts-droid-fallback ttf-unifont fonts-sipa-arundina fonts-sil-padauk fonts-khmeros fonts-beng-extra fonts-gargi fonts-taml-tscu fonts-tibetan-machine
+
+RUN echo 'tzdata tzdata/Areas select Europe' | debconf-set-selections \
+  && echo 'tzdata tzdata/Zones/Europe select Brussels' | debconf-set-selections \
+  && echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections \
+  && apt-get -y install wget tzdata locales \
+  && locale-gen $LANG \
+  && export LANG=fr_BE.UTF-8 \
+  && dpkg-reconfigure -f noninteractive locales \
+  && echo ${TZ} > /etc/timezone \
+  && dpkg-reconfigure -f noninteractive tzdata \
+  && echo "Contents of /etc/timezone and /etc/default/locale :" \
+  && cat /etc/timezone && cat /etc/default/locale
 
 # Tuning de postgresql
 RUN sed 's/md5/trust/' /etc/postgresql/10/main/pg_hba.conf \
@@ -113,7 +124,7 @@ RUN su - osm \
       && carto -a "3.0.10" project.mml > style.xml \ 
       && scripts/get-shapefiles.py
       
-RUN wget -c http://planet.osm.org/pbf/planet-latest.osm.pbf \
-      && osm2pgsql --create --slim -G -d gis -C 16000 --hstore -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua --number-processes 1 --flat-nodes /var/lib/flat_nodes/flat-nodes.bin planet-latest.osm.pbf \
+RUN wget -c http://download.geofabrik.de/africa-latest.osm.pbf \
+      && osm2pgsql --create --slim -G -d gis -C 8000 --hstore -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua --number-processes 1 --flat-nodes /var/lib/flat_nodes/flat-nodes.bin planet-latest.osm.pbf \
       && rm planet-latest.osm.pbf \
       && sudo -u postgres bash -c "psql -d gis -f indexes.sql"
