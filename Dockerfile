@@ -131,7 +131,7 @@ RUN sed 's/md5/trust/' /etc/postgresql/10/main/pg_hba.conf \
       && su - osm \
       && cd ~ \
       && wget -c http://download.geofabrik.de/africa/algeria-latest.osm.pbf \
-      && osm2pgsql --create --slim -G -d gis -C 2000 --hstore -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua --number-processes 1 --flat-nodes /var/lib/flat_nodes/flat-nodes.bin planet-latest.osm.pbf \
+      && osm2pgsql --create --slim -G -d gis -U postgres -H localhost -C 2000 --hstore -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua --number-processes 1 --flat-nodes /var/lib/flat_nodes/flat-nodes.bin planet-latest.osm.pbf \
       && rm algeria-latest.osm.pbf \
       && sudo -u postgres bash -c "psql -d gis -f indexes.sql" \
       && exit \
