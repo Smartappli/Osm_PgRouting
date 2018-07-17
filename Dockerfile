@@ -128,6 +128,7 @@ RUN su - osm \
 RUN sed 's/md5/trust/' /etc/postgresql/10/main/pg_hba.conf \
       && sed 's/peer/trust/' /etc/postgresql/10/main/pg_hba.conf \
       && service postgresql start \
+      && su - osm \
       && cd ~ \
       && wget -c http://download.geofabrik.de/africa/algeria-latest.osm.pbf \
       && osm2pgsql --create --slim -G -d gis -C 2000 --hstore -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua --number-processes 1 --flat-nodes /var/lib/flat_nodes/flat-nodes.bin planet-latest.osm.pbf \
