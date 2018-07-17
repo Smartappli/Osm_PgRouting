@@ -18,16 +18,16 @@ RUN apt-get update \
       && apt install -y fonts-noto-cjk fonts-noto-hinted fonts-noto-unhinted fonts-hanazono ttf-unifont fonts-dejavu-core fonts-droid-fallback ttf-unifont fonts-sipa-arundina fonts-sil-padauk fonts-khmeros fonts-beng-extra fonts-gargi fonts-taml-tscu fonts-tibetan-machine
 
 RUN echo 'tzdata tzdata/Areas select Europe' | debconf-set-selections \
-  && echo 'tzdata tzdata/Zones/Europe select Brussels' | debconf-set-selections \
-  && echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections \
-  && apt-get -y install wget tzdata locales \
-  && locale-gen $LANG \
-  && export LANG=fr_BE.UTF-8 \
-  && dpkg-reconfigure -f noninteractive locales \
-  && echo ${TZ} > /etc/timezone \
-  && dpkg-reconfigure -f noninteractive tzdata \
-  && echo "Contents of /etc/timezone and /etc/default/locale :" \
-  && cat /etc/timezone && cat /etc/default/locale
+      && echo 'tzdata tzdata/Zones/Europe select Brussels' | debconf-set-selections \
+      && echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections \
+      && apt-get -y install wget tzdata locales \
+      && locale-gen $LANG \
+      && export LANG=fr_BE.UTF-8 \
+      && dpkg-reconfigure -f noninteractive locales \
+      && echo ${TZ} > /etc/timezone \
+      && dpkg-reconfigure -f noninteractive tzdata \
+      && echo "Contents of /etc/timezone and /etc/default/locale :" \
+      && cat /etc/timezone && cat /etc/default/locale
 
 # Tuning de postgresql
 RUN sed 's/md5/trust/' /etc/postgresql/10/main/pg_hba.conf \
@@ -125,14 +125,16 @@ RUN su - osm \
       && carto -a "3.0.10" project.mml > style.xml \ 
       && scripts/get-shapefiles.py
       
-RUN service postgresql start \
+RUN sed 's/md5/trust/' /etc/postgresql/10/main/pg_hba.conf \
+      && sed 's/peer/trust/' /etc/postgresql/10/main/pg_hba.conf \
+      && service postgresql start \
       && cd ~ \
       && wget -c http://download.geofabrik.de/africa/algeria-latest.osm.pbf \
       && osm2pgsql --create --slim -G -d gis -C 2000 --hstore -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua --number-processes 1 --flat-nodes /var/lib/flat_nodes/flat-nodes.bin planet-latest.osm.pbf \
       && rm algeria-latest.osm.pbf \
       && sudo -u postgres bash -c "psql -d gis -f indexes.sql" \
       && exit \
-      && cd ~ \
+      && cd ~ \ 
       && sed 's/XML=\/home\/renderaccount\/src\/openstreetmap-carto\/mapnik.xml/XML=\/home\/osm\/src\/openstreetmap-carto\/style.xml/' /usr/local/etc/renderd.conf \
       && sudo sh -c 'echo "LoadModule tile_module /usr/lib/apache2/modules/mod_tile.so" > /etc/apache2/conf-available/mod_tile.conf' \
       && sudo a2enconf mod_tile \
