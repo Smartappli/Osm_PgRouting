@@ -125,12 +125,12 @@ RUN su - osm \
       && carto -a "3.0.10" project.mml > style.xml \ 
       && scripts/get-shapefiles.py
       
-RUN sed 's/md5/trust/' /etc/postgresql/10/main/pg_hba.conf \
-      && sed 's/peer/trust/' /etc/postgresql/10/main/pg_hba.conf \
+RUN sed 's/md5/trust/g' /etc/postgresql/10/main/pg_hba.conf \
+      && sed -e 's/peer/trust/g' /etc/postgresql/10/main/pg_hba.conf \
       && service postgresql start \
       && su - osm \
       && cd ~ \
-      && wget -c https://planet.osm.org/pbf/planet-latest.osm.pbf \
+      && wget -c http://download.geofabrik.de/africa/algeria-latest.osm.pbf \
       && osm2pgsql --create --slim -G -d gis -U osm -H localhost -C 2000 --hstore -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua --number-processes 1 --flat-nodes /var/lib/flat_nodes/flat-nodes.bin planet-latest.osm.pbf \
       && rm algeria-latest.osm.pbf \
       && sudo -u postgres bash -c "psql -d gis -f indexes.sql" \
