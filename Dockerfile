@@ -125,7 +125,7 @@ RUN su - osm \
       && carto -a "3.0.10" project.mml > style.xml \ 
       && scripts/get-shapefiles.py
       
-RUN sed 's/md5/trust/g' /etc/postgresql/10/main/pg_hba.conf \
+RUN sed -e 's/md5/trust/g' /etc/postgresql/10/main/pg_hba.conf \
       && sed -e 's/peer/trust/g' /etc/postgresql/10/main/pg_hba.conf \
       && service postgresql start \
       && su - osm \
