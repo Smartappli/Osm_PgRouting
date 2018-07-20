@@ -126,8 +126,8 @@ RUN su - osm \
       && scripts/get-shapefiles.py
       
 RUN service postgresql start \
-      && sed -i 's/md5/trust/g' /etc/postgresql/10/main/pg_hba.conf \
-      && sed -i 's/peer/trust/g' /etc/postgresql/10/main/pg_hba.conf \
+      && sed -e 's/md5/trust/g' --in-place /etc/postgresql/10/main/pg_hba.conf \
+      && sed -e 's/peer/trust/g' --in-place /etc/postgresql/10/main/pg_hba.conf \
       && service postgresql restart \
       && su - osm \
       && cd ~ \
