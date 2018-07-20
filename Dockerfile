@@ -125,9 +125,10 @@ RUN su - osm \
       && carto -a "3.0.10" project.mml > style.xml \ 
       && scripts/get-shapefiles.py
       
-RUN sed -e 's/md5/trust/g' /etc/postgresql/10/main/pg_hba.conf \
-      && sed -e 's/peer/trust/g' /etc/postgresql/10/main/pg_hba.conf \
-      && service postgresql start \
+RUN service postgresql start \
+      && sed -i 's/md5/trust/g' /etc/postgresql/10/main/pg_hba.conf \
+      && sed -i 's/peer/trust/g' /etc/postgresql/10/main/pg_hba.conf \
+      && service postgresql restart \
       && su - osm \
       && cd ~ \
       && wget -c http://download.geofabrik.de/africa/algeria-latest.osm.pbf \
