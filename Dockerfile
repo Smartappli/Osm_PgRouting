@@ -33,7 +33,7 @@ RUN echo 'tzdata tzdata/Areas select Europe' | debconf-set-selections \
 RUN sed 's/md5/trust/' /etc/postgresql/10/main/pg_hba.conf \
       && sed 's/peer/trust/' /etc/postgresql/10/main/pg_hba.conf
       
-# osm2pgsql 0.95 dev
+# osm2pgsql 0.96 dev
 RUN mkdir ~/src \
       && cd ~/src \
       && git clone git://github.com/openstreetmap/osm2pgsql.git \
@@ -132,7 +132,7 @@ RUN service postgresql start \
       && su - osm \
       && cd ~ \
       && wget -c http://download.geofabrik.de/africa/algeria-latest.osm.pbf \
-      && osm2pgsql --create --slim -G -d gis -U osm -W osm -H localhost -C 2000 --hstore -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua --number-processes 1 --flat-nodes /var/lib/flat_nodes/flat-nodes.bin planet-latest.osm.pbf \
+      && osm2pgsql --create --slim -G -d gis -C 2000 --hstore -S openstreetmap-carto/openstreetmap-carto.style --tag-transform-script openstreetmap-carto/openstreetmap-carto.lua --number-processes 1 --flat-nodes /var/lib/flat_nodes/flat-nodes.bin planet-latest.osm.pbf \
       && rm algeria-latest.osm.pbf \
       && sudo -u postgres bash -c "psql -d gis -f indexes.sql" \
       && exit \
